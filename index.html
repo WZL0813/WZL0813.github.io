@@ -1,211 +1,405 @@
 <!DOCTYPE html>
-<html lang="zh_CN">
+<html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<title>绿龙GreenDragonWZL引导页</title>
-<!-- Stylesheets -->
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<link href="css/responsive.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WZL0813</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background: #0a192f;
+            font-family: 'Orbitron', sans-serif;
+            color: #64ffda;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-#by WangZiLong
-#by WZL
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
 
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards, neon 1.5s ease-in-out infinite alternate;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-shadow: 
+                0 0 5px #64ffda,
+                0 0 10px #64ffda,
+                0 0 20px #64ffda,
+                0 0 40px #64ffda;
+        }
 
-<!--Favicon-->
-<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-<link rel="icon" href="images/favicon.png" type="image/x-icon">
-<!-- Responsive -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<!--[if lt IE 9]><script src="js/html5shiv.js"></script><![endif]-->
-<!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+        .enter-button {
+            font-family: 'Orbitron', sans-serif;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: transparent;
+            border: 2px solid #64ffda;
+            color: #64ffda;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 0.3s;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .enter-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+        }
+
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: #0a192f;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00ff;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+            opacity: 0.7;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+            opacity: 0.7;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(42px, 9999px, 44px, 0);
+            }
+            100% {
+                clip: rect(32px, 9999px, 162px, 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                clip: rect(12px, 9999px, 164px, 0);
+            }
+            100% {
+                clip: rect(54px, 9999px, 77px, 0);
+            }
+        }
+
+        @keyframes neon {
+            from {
+                text-shadow: 
+                    0 0 5px #64ffda,
+                    0 0 10px #64ffda,
+                    0 0 20px #64ffda,
+                    0 0 40px #64ffda;
+            }
+            to {
+                text-shadow: 
+                    0 0 2px #64ffda,
+                    0 0 5px #64ffda,
+                    0 0 10px #64ffda,
+                    0 0 20px #64ffda;
+            }
+        }
+
+        /* 添加加载界面样式 */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a192f;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .loading-text {
+            color: #64ffda;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #64ffda;
+            position: relative;
+            letter-spacing: 2px;
+        }
+
+        .loading-text::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 20px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(100, 255, 218, 0.8),
+                transparent
+            );
+            animation: scanning-text 2s linear infinite;
+        }
+
+        @keyframes scanning-text {
+            0% {
+                left: -20px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 20px;
+            background: rgba(100, 255, 218, 0.1);
+            border: 2px solid #64ffda;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: #64ffda;
+            box-shadow: 0 0 10px #64ffda;
+            transition: width 0.5s ease;
+        }
+
+        .loading-percentage {
+            color: #64ffda;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .scanning-line {
+            position: absolute;
+            width: 5px;
+            height: 100%;
+            background: rgba(100, 255, 218, 0.8);
+            box-shadow: 0 0 15px #64ffda;
+            animation: scan 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                left: 0;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* 隐藏主内容 */
+        .main-content {
+            display: none;
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-family: 'Orbitron', sans-serif;
+            color: #64ffda;
+            font-size: 16px;
+            z-index: 9999;
+            text-shadow: 0 0 5px #64ffda;
+            opacity: 0.8;
+            letter-spacing: 2px;
+            pointer-events: none; /* 防止文字影响页面交互 */
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #64ffda;
+            }
+            to {
+                text-shadow: 0 0 10px #64ffda, 0 0 20px #64ffda;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<div class="page-wrapper default-version">
- 	
-    <!-- Preloader -->
-    <div class="preloader"></div>
-
-    <div class="page-background">
-        <div class="image-1"><img src="images/icons/shape/icon-1.png" alt=""></div>
-        <div class="image-7"><img src="images/icons/shape/icon-7.png" alt=""></div>
-        <canvas id="canvas"></canvas>
+    <div class="loading-screen">
+        <div class="loading-text">SYSTEM INITIALIZATION</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+            <div class="scanning-line"></div>
+        </div>
+        <div class="loading-percentage">0%</div>
     </div>
-    
-    <!-- Mobile menu -->
-    <div class="mobile-menu">
+
+    <div class="main-content">
+        <div class="matrix-rain" id="matrix-rain"></div>
         <div class="container">
-            <!--Nav Outer-->
-            <div class="nav-outer clearfix">
-                <div class="logo"><a href="index.html"><img src="images/logo.png" alt=""></a></div>
-                <!-- Main Menu -->
-                <nav class="main-menu">
-                    <div class="navbar-header">
-                        <!-- Toggle Button -->      
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    
-                    <div class="navbar-collapse collapse scroll-nav clearfix">
-                        <ul class="navigation clearfix">
-                            
-                            <li class="current"><a href="#home">主页</a></li>
-                            <li><a href="#services">网址</a></li>
-
-                         </ul>
-                    </div>
-                </nav>
-                <!-- Main Menu End-->                        
-            </div>
-            <!--Nav Outer End-->            
+            <h1 class="glitch" data-text="Welcome to WangZiLong's Webpages!">Welcome to WangZiLong's Webpages!</h1>
+            <a href="WZL.html" class="enter-button">ENTER</a>
         </div>
     </div>
- 	
-    <main class="card-outer">
-        <div class="scroll-box">
-            <div class="container" data-animation-in="fadeInLeft" data-animation-out="fadeOutLeft">
-                <div class="card-wrapper">
-                    <div class="author-info" style="background-image:url(images/background/3.jpg)">
-                        <div class="image"><img src="images/resource/user.png" alt=""></div>
-                        <div class="author">
-                            <h3>绿龙GreenDragonWZL</h3>
-                            <div class="designation">
-                                
-                                <div class="typing-title">
-                                    <p><strong>点击“WANGZILONG”进入主页！</strong></p>
-                                </div>
-                                <span class="typed-title"></span>
-                            </div>
-                        </div>
-                        <div class="link-btn">
-                            <a href="https://wzl0813.github.io/WZL.html" class="theme-btn btn-style-one">WangZiLong</a>
-                        </div>
-                    </div>
-                    <div class="card-inner-box">
-                        <header class="header wow fadeInLeft" data-wow-duration="1.5s">
-                            <ul class="main-menu">
-                                <li class="active home"><a class="logo" href="#home"><img src="images/logo.png" alt=""></a></li>
-                                <li><a href="#services"><i class="flaticon-layers-1"></i>网址</a></li>
-                            </ul>
-                        </header>
 
-                        <!-- card item -->
-                        <div class="card-home card-item active" id="home" style="background-image:url(images/background/1.jpg)">
+    <div class="watermark">WangZiLong</div>
 
-                            <div class="card-inner wow fadeInUp" data-wow-duration="2s">
-                                <div class="image"><img src="images/resource/user.png" alt=""></div>
-                                <div class="author">
-                                    <h3>绿龙GreenDragonWZL</h3>
-                                    <div class="designation">
-                                        
-                                        <div class="typing-title">
-                                            <p><strong>或从“网址”内点击“WangZiLong”</strong></p>
-                                        </div>
-                                        <span class="typed-title"></span>
-                                    </div>
-                                </div>
-                                <div class="text">WZL</div>
-                                <div class="link-btn">
-                                    <a href="https://wzl0813.github.io/WZL.html" class="theme-btn btn-style-one">WangZiLong</a>
-                                    <a href="https://github.com/WZL0813/" class="theme-btn btn-style-two">GitHub</a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <!-- end item -->
+    <script>
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        document.getElementById('matrix-rain').appendChild(canvas);
 
+        // 设置画布尺寸
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-                        <!-- card item -->
-                        <div class="card-services card-item" id="services" style="background-image:url(images/background/2.jpg)">
-                            <div class="card-inner">
-                                <h4 class="title">网址</h4>
-                                <div class="row">
+        // 修改字符集，只保留字母和数字
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
 
-                                    <div class="services-block col-md-6">
-                                        <div class="inner-box">
-                                            <div class="icon-box"><span class="icon flaticon-web-design"></span></div>
-                                            <h4><a href="https://wzl0813.github.io/WZL.html">WangZiLong</a></h4>
-                                            <div class="text">主页 </div>
-                                        </div> 
-                                    </div>
-                                    <div class="services-block col-md-6">
-                                        <div class="inner-box">
-                                            <div class="icon-box"><span class="icon flaticon-layers-1"></span></div>
-                                            <h4><a href="https://qm.qq.com/q/fvT4uGvzpu">QQ</a></h4>
-                                            <div class="text">QQ群，交流群 </div>
-                                        </div> 
-                                    </div>
-                                    <div class="services-block col-md-6">
-                                        <div class="inner-box">
-                                            <div class="icon-box"><span class="icon flaticon-pen-tool"></span></div>
-                                            <h4><a href="https://space.bilibili.com/1948701915">bilibili</a></h4>
-                                            <div class="text">bilibili主页，视频网站 </div>
-                                        </div> 
-                                    </div>
-                                    <div class="services-block col-md-6">
-                                        <div class="inner-box">
-                                            <div class="icon-box"><span class="icon flaticon-pen-tool"></span></div>
-                                            <h4><a href="https://github.com/WZL0813">GitHub</a></h4>
-                                            <div class="text">GitHub主页，开源网站 </div>
-                                        </div> 
-                                    </div>
-                                    <div class="services-block col-md-6">
-                                        <div class="inner-box">
-                                            <div class="icon-box"><span class="icon flaticon-computer"></span></div>
-                                            <h4><a href="https://modrinth.com/user/WZL0813">modrinth</a></h4>
-                                            <div class="text">modrinth主页，模组网站 </div>
-                                        </div> 
-                                        </div> 
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end item -->
- 
+        // 初始化雨滴位置
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
 
+        function draw() {
+            // 设置半透明背景，产生拖尾效果
+            ctx.fillStyle = 'rgba(10, 25, 47, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                    </div>
-                </div>
+            // 设置文字样式
+            ctx.fillStyle = '#64ffda';
+            ctx.font = `${fontSize}px monospace`;
+
+            // 绘制字符
+            for (let i = 0; i < drops.length; i++) {
+                // 随机选择一个字符
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                // 绘制字符，x坐标为列数*字体大小，y坐标为下落距离*字体大小
+                ctx.fillStyle = `rgba(100, 255, 218, ${Math.random()})`;
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // 如果雨滴到达底部或随机重置，将其重置到顶部
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                // 递增雨滴位置
+                drops[i]++;
+            }
+
+            // 设置一些随机亮色字符
+            for (let i = 0; i < 5; i++) {
+                const x = Math.floor(Math.random() * columns) * fontSize;
+                const y = Math.floor(Math.random() * drops.length) * fontSize;
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                ctx.fillStyle = '#fff';
+                ctx.fillText(text, x, y);
+            }
+        }
+
+        // 动画循环
+        function animate() {
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 添加加载动画代码
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingBar = document.querySelector('.loading-bar');
+            const loadingScreen = document.querySelector('.loading-screen');
+            const mainContent = document.querySelector('.main-content');
+            const loadingPercentage = document.querySelector('.loading-percentage');
+            const loadingText = document.querySelector('.loading-text');
+
+            let progress = 0;
+
+            // 简化加载文字，只显示 WangZiLong
+            loadingText.textContent = "WangZiLong";
+
+            function simulateLoading() {
+                if (progress < 100) {
+                    progress += Math.random() * 3;
+                    if (progress > 100) progress = 100;
                     
-            </div>
-        </div>
-            
-    </main>
+                    loadingBar.style.width = `${progress}%`;
+                    loadingPercentage.textContent = `${Math.floor(progress)}%`;
+                    
+                    setTimeout(simulateLoading, 100);
+                } else {
+                    // 加载完成后的动画
+                    loadingScreen.style.transition = 'opacity 1s ease';
+                    loadingScreen.style.opacity = '0';
+                    mainContent.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        animate();
+                    }, 1000);
+                }
+            }
 
-</div>
-<!--End pagewrapper-->
-
-
-<script src="js/jquery.js"></script> 
-
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="js/owl.js"></script>
-<script src="js/wow.js"></script>
-<script src="js/appear.js"></script>
-<script src="js/jquery.fancybox.js"></script>
-<script src="js/element-in-view.js"></script>
-<script src="js/knob.js"></script>
-<script src="js/validate.js"></script>
-<script src="js/mousemoveparallax.js"></script>
-<script src="js/pagenav.js"></script>
-<script src="js/jquery-type.js"></script>
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/particle-alone.js"></script>
-<script src="js/script.js"></script>
-
-
-
+            simulateLoading();
+        });
+    </script>
 </body>
 </html>
-
-#by WangZiLong
-#by WZL
