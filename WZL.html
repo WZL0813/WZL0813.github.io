@@ -9,8 +9,9 @@
 <link href="css/responsive.css" rel="stylesheet">
 
 
-#by WangZiLong
-#by WZL
+
+
+
 
 
 <!--Favicon-->
@@ -21,9 +22,162 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <!--[if lt IE 9]><script src="js/html5shiv.js"></script><![endif]-->
 <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+
+<!-- 添加加载界面的样式 -->
+<style>
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-text {
+    font-size: 24px;
+    margin-bottom: 20px;
+    animation: textFlicker 1.5 infinite, rainbow 5 linear infinite;
+    background: linear-gradient(
+        90deg,
+        #ff0000 0%,
+        #ff7f00 14.28%,
+        #ffff00 28.56%,
+        #00ff00 42.84%,
+        #0000ff 57.12%,
+        #4b0082 71.4%,
+        #9400d3 85.68%,
+        #ff0000 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+@keyframes textFlicker {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes rainbow {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
+.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        #ff0000,
+        #ff7f00,
+        #ffff00,
+        #00ff00,
+        #0000ff,
+        #4b0082,
+        #9400d3
+    );
+    background-size: 200% auto;
+    animation: progressRainbow 5 linear infinite;
+    transition: width 0.3 ease;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+@keyframes progressRainbow {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
+.progress-number {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+    background: linear-gradient(
+        90deg,
+        #ff0000 0%,
+        #ff7f00 14.28%,
+        #ffff00 28.56%,
+        #00ff00 42.84%,
+        #0000ff 57.12%,
+        #4b0082 71.4%,
+        #9400d3 85.68%,
+        #ff0000 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 5 linear infinite;
+}
+
+.corner-text {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(
+        90deg,
+        #ff0000 0%,
+        #ff7f00 14.28%,
+        #ffff00 28.56%,
+        #00ff00 42.84%,
+        #0000ff 57.12%,
+        #4b0082 71.4%,
+        #9400d3 85.68%,
+        #ff0000 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 5 linear infinite;
+    text-shadow: 0 0 2px rgba(0,0,0,0.1);
+}
+</style>
 </head>
 
 <body>
+<!-- 添加新的加载界面 -->
+<div class="loading-overlay">
+    <div class="loading-text">WangZiLong's Website</div>
+    <div class="progress-bar">
+        <div class="progress"></div>
+    </div>
+    <div class="progress-number">0%</div>
+</div>
 
 <div class="page-wrapper default-version">
  	
@@ -324,7 +478,7 @@
                                         <div class="inner-box">
                                             <div class="icon-box"><span class="icon flaticon-web-design"></span></div>
                                             <h4><a href="https://steamcommunity.com/profiles/76561199580458581/">Steam</a></h4>
-                                            <div class="text">Steam主页，游戏网站 </div>
+                                            <div class="text">Steam主，游戏网站 </div>
                                         </div> 
                                     </div>
                                     <div class="services-block col-md-6">
@@ -507,8 +661,36 @@
 <script src="js/particle-alone.js"></script>
 <script src="js/script.js"></script>
 
+<!-- 添加加载进度条的脚本 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const progress = document.querySelector('.progress');
+    const progressNumber = document.querySelector('.progress-number');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    
+    let width = 0;
+    const interval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                loadingOverlay.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 500);
+        } else {
+            width += Math.random() * 3; // 随机增加进度，使加载看起来更自然
+            if (width > 100) width = 100;
+            progress.style.width = width + '%';
+            progressNumber.textContent = Math.floor(width) + '%';
+        }
+    }, 50);
+});
+</script>
+
+<div class="corner-text">WangZiLong</div>
+
 </body>
 </html>
 
-#by WangZiLong
-#by WZL
