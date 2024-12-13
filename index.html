@@ -39,11 +39,7 @@
             animation: fadeInUp 0.8s ease forwards, neon 1.5s ease-in-out infinite alternate;
             letter-spacing: 3px;
             font-weight: 700;
-            text-shadow: 
-                0 0 5px #64ffda,
-                0 0 10px #64ffda,
-                0 0 20px #64ffda,
-                0 0 40px #64ffda;
+            color: #64ffda;
         }
 
         .enter-button {
@@ -102,7 +98,8 @@
 
         .glitch::before {
             left: 2px;
-            text-shadow: -2px 0 #ff00ff;
+            text-shadow: -2px 0 #ff00ff,
+                        0 0 20px rgba(255, 0, 255, 0.5);
             clip: rect(24px, 550px, 90px, 0);
             animation: glitch-anim-2 3s infinite linear alternate-reverse;
             opacity: 0.7;
@@ -110,7 +107,8 @@
 
         .glitch::after {
             left: -2px;
-            text-shadow: -2px 0 #00fff9;
+            text-shadow: 2px 0 #00fff9,
+                        0 0 20px rgba(0, 255, 249, 0.5);
             clip: rect(85px, 550px, 140px, 0);
             animation: glitch-anim 2.5s infinite linear alternate-reverse;
             opacity: 0.7;
@@ -137,17 +135,19 @@
         @keyframes neon {
             from {
                 text-shadow: 
-                    0 0 5px #64ffda,
                     0 0 10px #64ffda,
                     0 0 20px #64ffda,
-                    0 0 40px #64ffda;
+                    0 0 30px #64ffda,
+                    0 0 40px #64ffda,
+                    0 0 70px #64ffda;
             }
             to {
                 text-shadow: 
-                    0 0 2px #64ffda,
                     0 0 5px #64ffda,
                     0 0 10px #64ffda,
-                    0 0 20px #64ffda;
+                    0 0 20px #64ffda,
+                    0 0 30px #64ffda,
+                    0 0 50px #64ffda;
             }
         }
 
@@ -168,37 +168,31 @@
         }
 
         .loading-text {
-            color: #64ffda;
+            color: rgba(100, 255, 218, 0.3);
             font-size: 24px;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #64ffda;
             position: relative;
             letter-spacing: 2px;
         }
 
-        .loading-text::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 20px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(100, 255, 218, 0.8),
-                transparent
-            );
-            animation: scanning-text 2s linear infinite;
+        .loading-text span {
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
         }
 
-        @keyframes scanning-text {
-            0% {
-                left: -20px;
-            }
-            100% {
-                left: 100%;
-            }
+        .loading-text span.highlight {
+            color: #64ffda;
+            text-shadow: 0 0 10px #64ffda,
+                        0 0 20px #64ffda,
+                        0 0 30px #64ffda;
+            opacity: 1;
+        }
+
+        .loading-text span.dim {
+            color: rgba(100, 255, 218, 0.6);
+            text-shadow: 0 0 2px rgba(100, 255, 218, 0.2);
+            opacity: 0.6;
         }
 
         .loading-bar-container {
@@ -209,14 +203,35 @@
             border-radius: 10px;
             overflow: hidden;
             position: relative;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
         }
 
         .loading-bar {
             width: 0%;
             height: 100%;
-            background: #64ffda;
-            box-shadow: 0 0 10px #64ffda;
-            transition: width 0.5s ease;
+            background: linear-gradient(
+                90deg,
+                rgba(100, 255, 218, 0.8),
+                #64ffda,
+                rgba(100, 255, 218, 0.8)
+            );
+            box-shadow: 0 0 15px #64ffda,
+                        0 0 30px #64ffda;
+            position: relative;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: #fff;
+            opacity: 0.8;
+            filter: blur(3px);
+            box-shadow: 0 0 10px #fff,
+                        0 0 20px #64ffda;
         }
 
         .loading-percentage {
@@ -226,21 +241,7 @@
         }
 
         .scanning-line {
-            position: absolute;
-            width: 5px;
-            height: 100%;
-            background: rgba(100, 255, 218, 0.8);
-            box-shadow: 0 0 15px #64ffda;
-            animation: scan 1.5s ease-in-out infinite;
-        }
-
-        @keyframes scan {
-            0% {
-                left: 0;
-            }
-            100% {
-                left: 100%;
-            }
+            display: none;
         }
 
         /* 隐藏主内容 */
@@ -275,7 +276,18 @@
 </head>
 <body>
     <div class="loading-screen">
-        <div class="loading-text">SYSTEM INITIALIZATION</div>
+        <div class="loading-text">
+            <span>W</span>
+            <span>a</span>
+            <span>n</span>
+            <span>g</span>
+            <span>Z</span>
+            <span>i</span>
+            <span>L</span>
+            <span>o</span>
+            <span>n</span>
+            <span>g</span>
+        </div>
         <div class="loading-bar-container">
             <div class="loading-bar"></div>
             <div class="scanning-line"></div>
@@ -369,12 +381,8 @@
             const loadingScreen = document.querySelector('.loading-screen');
             const mainContent = document.querySelector('.main-content');
             const loadingPercentage = document.querySelector('.loading-percentage');
-            const loadingText = document.querySelector('.loading-text');
-
+            
             let progress = 0;
-
-            // 简化加载文字，只显示 WangZiLong
-            loadingText.textContent = "WangZiLong";
 
             function simulateLoading() {
                 if (progress < 100) {
@@ -386,7 +394,6 @@
                     
                     setTimeout(simulateLoading, 100);
                 } else {
-                    // 加载完成后的动画
                     loadingScreen.style.transition = 'opacity 1s ease';
                     loadingScreen.style.opacity = '0';
                     mainContent.style.display = 'block';
@@ -398,7 +405,34 @@
                 }
             }
 
+            function updateLoadingText() {
+                const letters = document.querySelectorAll('.loading-text span');
+                const totalTime = 1500; // 扫描一次的总时间（毫秒）
+                const currentTime = performance.now() % totalTime;
+                const progress = (currentTime / totalTime) * (letters.length + 4); // +4 使动画更流畅
+                
+                letters.forEach((letter, index) => {
+                    const distance = Math.abs(index - progress);
+                    
+                    if (distance < 1) {
+                        letter.classList.add('highlight');
+                        letter.classList.remove('dim');
+                    } else {
+                        letter.classList.remove('highlight');
+                        letter.classList.add('dim');
+                    }
+                });
+                
+                requestAnimationFrame(updateLoadingText);
+            }
+
+            // 确保所有字母初始状态为暗色
+            const letters = document.querySelectorAll('.loading-text span');
+            letters.forEach(letter => letter.classList.add('dim'));
+
+            // 启动动画
             simulateLoading();
+            updateLoadingText();
         });
     </script>
 </body>
