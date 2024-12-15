@@ -17,7 +17,7 @@
             opacity: 0.8;
             letter-spacing: 2px;
             pointer-events: none; /* 防止文字影响页面交互 */
-            animation: glow 2s ease-in-out infinite alternate;
+            animation: glow 2 ease-in-out infinite alternate;
         }
         * {
             margin: 0;
@@ -44,7 +44,7 @@
             margin-bottom: 30px;
             font-size: 2.5em;
             text-shadow: 0 0 10px #64ffda;
-            animation: glow 1.5s ease-in-out infinite alternate;
+            animation: glow 1.5 ease-in-out infinite alternate;
         }
 
         .preview-container {
@@ -79,7 +79,7 @@
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3 ease;
         }
 
         .control-button:hover {
@@ -115,7 +115,7 @@
             color: #64ffda;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3 ease;
             text-decoration: none;
             font-size: 1.1em;
         }
@@ -140,7 +140,7 @@
             align-items: center;
             padding: 15px;
             border-bottom: 1px solid rgba(100, 255, 218, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.3 ease;
         }
 
         .menu-item:hover {
@@ -164,7 +164,7 @@
             padding: 5px 10px;
             border: 1px solid #64ffda;
             border-radius: 4px;
-            transition: all 0.3s ease;
+            transition: all 0.3 ease;
         }
 
         .menu-item-link:hover {
@@ -182,7 +182,7 @@
             padding: 10px 20px;
             color: #64ffda;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3 ease;
             border-bottom: 2px solid transparent;
             margin-bottom: -2px;
         }
@@ -215,7 +215,7 @@
             color: #64ffda;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3 ease;
             font-size: 1.1em;
         }
 
@@ -292,7 +292,7 @@
         padding: 5px 10px;
         border-radius: 4px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.3 ease;
     }
 
         .menu-item-delete:hover {
@@ -353,6 +353,11 @@
     <script>
         // 食谱数据
         const menuData = [
+        {
+                date: '2024-12-16',
+                title: '杭州市景汇中学12月16日—12月20日食谱',
+                url: 'https://mp.weixin.qq.com/s/Xm93_BroXZmTdFe1GDL7hA'
+            },
         {
                 date: '2024-12-09',
                 title: '杭州市景汇中学12月9日—12月13日食谱',
