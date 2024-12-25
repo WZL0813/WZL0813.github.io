@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>原神-WangZiLong</title>
-    <link id="icon" rel="shortcut icon" href="YuanShen/favicon.ico">
+    <title id="page-title">原神5.3版本更新倒计时</title>
     <style>
+        .WZL {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(
+        90deg,
+        #ff0000 0%,
+        #ff7f00 14.28%,
+        #ffff00 28.56%,
+        #00ff00 42.84%,
+        #0000ff 57.12%,
+        #4b0082 71.4%,
+        #9400d3 85.68%,
+        #ff0000 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 5 linear infinite;
+    text-shadow: 0 0 2px rgba(0,0,0,0.1);
+}
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f0f0f0;
@@ -34,36 +58,57 @@
 </head>
 <body>
     <div class="container">
-        <div class="header__navbar">
-        <h1>距离原神5.3还有</h1>
+        <h1 id="page-header">原神版本更新-WangZiLong</h1>
         <div class="countdown" id="countdown">
             00:00:00:00
-            </div>
         </div>
     </div>
 
     <script>
+        const updateStartTime = '2025-01-01T08:00:00'; // 版本更新预计结束时间
+
         function updateCountdown() {
-            const nextUpdate = new Date('2025-01-01T06:00:00');
+            const versionUpdate = new Date('2025-01-01T06:00:00'); // 版本更新时间
+            const updateStart = new Date(updateStartTime); // 更新开始时间
             const now = new Date();
-            const diff = nextUpdate - now;
+            const diffToUpdate = now - versionUpdate;
+            const diffToUpdateStart = now - updateStart;
 
-            if (diff < 0) {
-                document.getElementById('countdown').innerHTML = '更新已发布！';
-                return;
+            if (diffToUpdate < 0) {
+                // 如果时间未到，显示倒计时
+                const daysToGo = Math.floor((versionUpdate - now) / (1000 * 60 * 60 * 24));
+                const hoursToGo = Math.floor(((versionUpdate - now) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutesToGo = Math.floor(((versionUpdate - now) % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsToGo = Math.floor(((versionUpdate - now) % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerHTML = `${daysToGo}天 ${hoursToGo}小时 ${minutesToGo}分钟 ${secondsToGo}秒`;
+                document.getElementById('page-header').innerHTML = '原神5.3版本更新倒计时';
+                document.getElementById('page-title').innerHTML = '原神5.3版本更新倒计时-WangZiLong';
+            } else if (diffToUpdate >= 0 && diffToUpdateStart < 0) {
+                // 如果时间已到但更新尚未完成，显示更新中
+                const hoursUpdating = Math.floor((updateStart - now) / (1000 * 60 * 60));
+                const minutesUpdating = Math.floor(((updateStart - now) % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsUpdating = Math.floor(((updateStart - now) % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerHTML = `更新中... 预计剩余 ${-hoursUpdating}小时 ${Math.abs(minutesUpdating)}分钟 ${Math.abs(secondsUpdating)}秒`;
+                document.getElementById('page-header').innerHTML = '原神5.3版本更新中';
+                document.getElementById('page-title').innerHTML = '原神5.3版本更新中-WangZiLong';
+            } else {
+                // 如果更新已完成，显示已开启
+                const daysPassed = Math.floor((diffToUpdateStart) / (1000 * 60 * 60 * 24));
+                const hoursPassed = Math.floor((diffToUpdateStart % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutesPassed = Math.floor((diffToUpdateStart % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsPassed = Math.floor((diffToUpdateStart % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerHTML = `${daysPassed}天 ${hoursPassed}小时 ${minutesPassed}分钟 ${secondsPassed}秒`;
+                document.getElementById('page-header').innerHTML = '原神5.3版本已开启';
+                document.getElementById('page-title').innerHTML = '原神5.3版本已开启-WangZiLong';
             }
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('countdown').innerHTML = `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
 
             setTimeout(updateCountdown, 1000);
         }
 
         updateCountdown();
     </script>
+
+<div class="WZL">WangZiLong</div>
+
 </body>
 </html>
