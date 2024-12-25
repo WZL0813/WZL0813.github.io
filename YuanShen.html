@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原神-WangZiLong</title>
+    <link id="icon" rel="shortcut icon" href="YuanShen/favicon.ico">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .countdown {
+            font-size: 2em;
+            color: #0070f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header__navbar">
+        <h1>距离原神5.3还有</h1>
+        <div class="countdown" id="countdown">
+            00:00:00:00
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const nextUpdate = new Date('2025-01-01T06:00:00');
+            const now = new Date();
+            const diff = nextUpdate - now;
+
+            if (diff < 0) {
+                document.getElementById('countdown').innerHTML = '更新已发布！';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+
+            setTimeout(updateCountdown, 1000);
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>
