@@ -386,8 +386,9 @@
             // 可以继续添加更多历史记录
         ];
 
+
         // 修改预览框架的加载方式
-        function loadPreview(url) {
+        function loadPreview(url,date,title) {
             const frame = document.getElementById('previewFrame');
             if (url.includes('mp.weixin.qq.com')) {
                 // 如果是微信文章，显示提示和直接链接
@@ -432,23 +433,29 @@
                             border: 2px dashed #64ffda;
                             border-radius: 10px;
                         }
+                        .preview-webp {
+                            width: 870px;
+                            height: 500px;
+                        }
                     </style>
+                <div>
+                    <img class="preview-webp" src="XueXiaoShiPu/${date}.webp" alt="${title}">   
+                </div>
+                   <div class="qr-placeholder">
                     <div class="message">
-                        <p>该内容为微信公众号文章，无法直接在页面中显示。</p>
-                        <p>请点击下方按钮在新窗口中查看：</p>
-                    </div>
+                        <p>该内容为微信公众号文章，无法直接在页面中显示。但是我提取了食谱图片。</p>
+                        <p>查看原文请点击下方按钮在新窗口中查看：</p>
                     <a class="link" href="${url}" target="_blank">在微信中打开文章</a>
-                    <div class="qr-placeholder">
-                        <p>温馨提示：</p>
-                        <p>1. 建议使用手机微信扫描文章二维码查看</p>
-                        <p>2. 或在电脑端使用微信打开链接</p>
                     </div>
+                   </div>
+
                 `;
             } else {
                 // 非微信文章直接加载
                 frame.src = url;
             }
         }
+
 
         // 修改初始化代码
         document.addEventListener('DOMContentLoaded', function() {
@@ -628,15 +635,19 @@
 
         // 加载历史记录
         function loadHistory() {
-            const historySection = document.getElementById('historySection');
-            historySection.innerHTML = menuData.map(menu => `
-                <div class="menu-item">
-                    <span class="menu-item-date">${menu.date}</span>
-                    <span class="menu-item-title">${menu.title}</span>
-                    <a href="${menu.url}" class="menu-item-link" target="_blank">查看</a>
-                </div>
-            `).join('');
-        }
+    const historySection = document.getElementById('historySection');
+    sortMenuData(); // 使用通用排序函数
+    historySection.innerHTML = menuData.map((menu, index) => `
+        <div class="menu-item">
+            <span class="menu-item-date">${menu.date}</span>
+            <span class="menu-item-title">${menu.title}</span>
+            <div class="menu-item-actions">
+                <a href="${menu.url}" class="menu-item-link" target="_blank">查看</a>
+                <button class="menu-item-delete" onclick="confirmDelete(${index})">删除</button>
+            </div>
+        </div>
+    `).join('');
+}
         
 
         // 自动调整iframe高度
@@ -780,6 +791,12 @@ let originalModalContent;
 document.addEventListener('DOMContentLoaded', function() {
     originalModalContent = document.querySelector('.modal-content').innerHTML;
     initializeModalEvents();
+    sortMenuData();  // 初始化时排序
+    const latestMenu = menuData[0];
+    if (latestMenu && latestMenu.url && latestMenu.date && latestMenu.title) {
+        loadPreview(latestMenu.url, latestMenu.date, latestMenu.title);
+    }
+    loadHistory();
 });
 
 // 初始化模态框事件
