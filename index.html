@@ -25,7 +25,6 @@
             align-items: center;
         }
 
-
         .container {
             text-align: center;
             position: relative;
@@ -40,17 +39,6 @@
             animation: fadeInUp 0.8 ease forwards, neon 1.5 ease-in-out infinite alternate;
             letter-spacing: 3px;
             font-weight: 700;
-            color: #64ffda;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeInUp 0.8 ease forwards, neon 1.5 ease-in-out infinite alternate;
-            letter-spacing: 1.5px;
-            font-weight: 200;
             color: #64ffda;
         }
 
@@ -127,19 +115,19 @@
         }
 
         @keyframes glitch-anim {
-            50% {
+            0% {
                 clip: rect(42px, 9999px, 44px, 0);
             }
-            75% {
+            100% {
                 clip: rect(32px, 9999px, 162px, 0);
             }
         }
 
         @keyframes glitch-anim-2 {
-            50% {
+            0% {
                 clip: rect(12px, 9999px, 164px, 0);
             }
-            75% {
+            100% {
                 clip: rect(54px, 9999px, 77px, 0);
             }
         }
@@ -190,7 +178,7 @@
         .loading-text span {
             position: relative;
             display: inline-block;
-            transition: all 0.3 ease;
+            transition: all 0.3s ease;
         }
 
         .loading-text span.highlight {
@@ -284,8 +272,6 @@
                 text-shadow: 0 0 10px #64ffda, 0 0 20px #64ffda;
             }
         }
-
-
     </style>
 </head>
 <body>
@@ -308,14 +294,15 @@
         </div>
         <div class="loading-percentage">0%</div>
     </div>
+
     <div class="main-content">
         <div class="matrix-rain" id="matrix-rain"></div>
         <div class="container">
             <h1 class="glitch" data-text="Welcome to WangZiLong's Webpages!">Welcome to WangZiLong's Webpages!</h1>
-            <h2 class="glitch" data-text="绿龙GreenDragonWZL">绿龙GreenDragonWZL</h2>
             <a href="WZL.html" class="enter-button">ENTER</a>
         </div>
     </div>
+
     <div class="watermark">WangZiLong</div>
 
     <script>
